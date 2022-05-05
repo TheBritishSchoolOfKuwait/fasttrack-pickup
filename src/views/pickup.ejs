@@ -5,26 +5,55 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PICKUP</title>
+    <title>Pickup</title>
 </head>
 
-<body>
-    <div>
-        <form>
-            <label for="cars">Choose a GATE for PICKUP:</label>
-
-            <select name="gate" id="gate">
-                <option value="gate8">GATE W8</option>
-                <option value="gate9">GATE W9</option>
-                <option value="gaten1">GATE N1</option>
-            </select>
-            <br>
-            <label for="adno">Admission No</label>
-            <input type="text" name="adno" id="adno">
-            <br>
-            <button type="submit">CREATE PICKUP</button>
-        </form>
-    </div>
-</body>
+<main>
+    <%- include('nav.ejs') %>
+        <div>
+            <h2 style="text-align: center;">PICKUP</h2>
+            <form>
+                <label for="gates">GATE:</label>
+                <select name="gate" id="gate">
+                    <option value="Gate W8">GATE W8</option>
+                    <option value="Gate W9">GATE W9</option>
+                    <option value="Gate N1">GATE N1</option>
+                </select>
+                <br>
+                <label for="adno">Ad No</label>
+                <input type="number" name="adno" id="adno">
+                <br>
+                <button>SUBMIT</button>
+            </form>
+        </div>
+</main>
 
 </html>
+<script>
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        // get values
+
+        const gate = form.gate.value;
+        let adno = form.adno.value;
+
+        if (adno.length < 6) {
+            adno = adno.padStart(6, "0")
+        }
+
+        console.log(adno)
+        const staffCde = localStorage.getItem('staffCode')
+        // try {
+        //     const url = decodeURIComponent(`http://bie-api.bsk.edu.kw:4950/Service.asmx/StudentPickupWalking?adNo=${adno}&gate=${gate}&staffCode=${staffCde
+        //         }`)
+        //     const res = await fetch(url, {
+        //         method: 'GET',
+        //     });
+        //     const data = await res.json();
+        // } catch (error) {
+        //     console.log(error)
+        // }
+    });
+</script>

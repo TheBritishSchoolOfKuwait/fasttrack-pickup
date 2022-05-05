@@ -17,4 +17,5 @@ const requireAut = (req, res, next) => {
         res.redirect("/login");
     }
 }
+
 export default requireAut

@@ -7,7 +7,9 @@ import { json, urlencoded } from "express";
 import path from "path";
 
 const __dirname = path.resolve();
+
 import passportADRouter from "./routes/passport.js";
+import userADRouter from "./routes/logout.js";
 import requireAut from "./middleware/authmiddelware.js";
 import cookieParser from "cookie-parser";
 
@@ -24,7 +26,7 @@ const port = process.env.PORT;
 app.use(json());
 app.use(bodyPaser.json());
 app.use(cookieParser())
-app.use(urlencoded({ extended: true }));
+// app.use(urlencoded({ extended: true }));
 
 app.get('/', requireAut, (req, res) => {
     res.render('pickup');
@@ -34,10 +36,10 @@ app.get('/login', (req, res) => {
     res.render('login');
 })
 
-
 app.use(
     "/api/",
     passportADRouter,
+    userADRouter
 );
 
 app.use((req, res) => {

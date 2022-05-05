@@ -3,7 +3,7 @@ import jsonwebtoken from "jsonwebtoken";
 
 const authenticateUser = async (req, res) => {
     let { username, password } = req.body;
-
+    username = `${username}@bsk.edu.kw`
     const config = {
         url: process.env.LADAP_URL,
         baseDN: process.env.BASEDN,

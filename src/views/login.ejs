@@ -9,15 +9,22 @@
 </head>
 
 <body>
-    <form action="/api/login/">
-        <label for="email">Email</label>
-        <input type="text" name="username" id="username">
-        </br>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        </br>
-        <button>Login</button>
-    </form>
+    <div style="text-align: center;margin-top: 20px; margin-bottom: 20px;">
+        <form action="/api/login/">
+            <div style="margin-bottom: 5px;">
+                <label style="font-size: 20px; margin-right: 2px;" for="email">Staff Code</label>
+                <input style="padding: 10px; margin: 20px;" type="text" name="username" id="username">
+                </br>
+            </div>
+            <div style="margin-top: 10px;">
+                <label style="font-size: 20px; margin-right: 2px;" for="password">Password</label>
+                <input style="padding: 10px; margin: 10px;" type="password" name="password" id="password">
+                </br>
+            </div>
+            <button
+                style="border: 2px; width:min-content; height: fit-content; font-size: large; margin-top: 7px; padding: 10px;">Login</button>
+        </form>
+    </div>
 </body>
 
 </html>
@@ -28,7 +35,7 @@
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         // get values
-        const username = form.username.value;
+        const username = form.username.value.toLowerCase();
         const password = form.password.value;
 
         try {
@@ -40,11 +47,12 @@
             const data = await res.json();
 
             if (data?.displayName) {
+                localStorage.setItem('staffCode', username)
                 location.assign('/');
             }
         }
-        catch (err) {
-            console.log(err);
+        catch (error) {
+            console.log(error);
         }
 
     });
