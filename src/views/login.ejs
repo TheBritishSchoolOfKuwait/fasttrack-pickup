@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+    <form action="/api/login/">
+        <label for="email">Email</label>
+        <input type="text" name="username" id="username">
+        </br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+        </br>
+        <button>Login</button>
+    </form>
+</body>
+
+</html>
+
+<script>
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        // get values
+        const username = form.username.value;
+        const password = form.password.value;
+
+        try {
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                body: JSON.stringify({ username, password }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await res.json();
+
+            if (data?.displayName) {
+                location.assign('/');
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+
+    });
+</script>
