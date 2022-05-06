@@ -21,7 +21,7 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/src/views');
-const port = process.env.PORT;
+const port = process.env.PORT || 4500;
 
 app.use(json());
 app.use(bodyPaser.json());

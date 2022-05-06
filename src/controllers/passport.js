@@ -2,6 +2,7 @@ import ActiveDirectory from "activedirectory2";
 import jsonwebtoken from "jsonwebtoken";
 
 const authenticateUser = async (req, res) => {
+
     let { username, password } = req.body;
     username = `${username}@bsk.edu.kw`
     const config = {
@@ -29,30 +30,33 @@ const authenticateUser = async (req, res) => {
             console.warn(
                 `Authentication Failed Check Your Credentials: ${JSON.stringify(err)}`
             );
-            res.status(404).send(`
+            return res.status(404).send(`
             <h1>The credentials you have entered is not correct please ensure they are correct</h1>
             <a href="/login">Login Page</a>
             `)
-            return;
         }
 
         if (auth) {
             adProf.findUser(username, (err, user) => {
                 if (err) {
                     console.warn(`${JSON.stringify(err)}`);
-                    // console.log("ERROR: " + JSON.stringify(err));
-                    return;
+                    return res.status(404).json({
+                        status: "Failure",
+                        message: "Please Check Your Credentials"
+                    });
                 }
 
                 if (!user) {
                     console.warn(`Log-In Failed`);
                     return res
                         .status(404)
-                        .send({ status: "Failure", message: "User not found." });
                 } else console.info(`Log-In Success for ${user?.sAMAccountName}`);
                 const token = createToken(user?.sAMAccountName)
-                res.cookie('jwt', token, { httpOnly: true })
-                res.status(201).send(user)
+                res.cookie('jwt', token, { httpOnly: true, maxAge: 4 * 60 * 60 * 1000 })
+                res.status(201).json({
+                    status: "Success",
+                    user: user?.sAMAccountName
+                })
             });
         }
     });
@@ -63,7 +67,7 @@ const createToken = (sAMAccountName) => {
     return jsonwebtoken.sign({
         sAMAccountName
     }, process.env.JWT_SECRET, {
-        expiresIn: "5h"
+        expiresIn: "4h"
     })
 }
 
