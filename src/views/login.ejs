@@ -11,18 +11,17 @@
 <body>
     <div style="text-align: center;margin-top: 20px; margin-bottom: 20px;">
         <form action="/api/login/">
-            <div style="margin-bottom: 5px;">
-                <label style="font-size: 20px; margin-right: 2px;" for="email">Staff Code</label>
-                <input style="padding: 10px; margin: 20px;" type="text" name="username" id="username" required>
-                </br>
-            </div>
-            <div style="margin-top: 10px;">
-                <label style="font-size: 20px; margin-right: 2px;" for="password">Password</label>
-                <input style="padding: 10px; margin: 10px;" type="password" name="password" id="password" required>
-                </br>
-            </div>
-            <button
-                style="border: 2px; width:min-content; height: fit-content; font-size: large; margin-top: 7px; padding: 10px;">Login</button>
+
+            <label class="labels" for="email">Staff Code</label>
+            <input type="text" name="username" id="username" required>
+            </br>
+
+
+            <label class="labels" for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+            </br>
+
+            <input type="submit" value="LOGIN" />
             <div class="error"></div>
         </form>
     </div>
@@ -64,3 +63,44 @@
 
     });
 </script>
+<style>
+    .labels {
+        display: inline-block;
+        font-size: 20px;
+    }
+
+    input[type=text] {
+        width: 50%;
+        padding: 7px 7px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=password] {
+        width: 50%;
+        padding: 7px 7px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 30%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .error {
+        color: #4CAF50;
+    }
+</style>

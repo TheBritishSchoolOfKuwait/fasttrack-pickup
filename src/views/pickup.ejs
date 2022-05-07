@@ -48,19 +48,17 @@
         if (adno.length < 6) {
             adno = adno.padStart(6, "0")
         }
-
-        console.log(adno)
         const staffCde = localStorage.getItem('staffCode')
-        // try {
-        //     const url = decodeURIComponent(`http://bie-api.bsk.edu.kw:4950/Service.asmx/StudentPickupWalking?adNo=${adno}&gate=${gate}&staffCode=${staffCde
-        //         }`)
-        //     const res = await fetch(url, {
-        //         method: 'GET',
-        //     });
-        //     const data = await res.json();
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        try {
+            const url = decodeURIComponent(`http://bie-api.bsk.edu.kw:4950/Service.asmx/StudentPickupWalking?adNo=${adno}&gate=${gate}&staffCode=${staffCde
+                }`)
+            const res = await fetch(url, {
+                method: 'GET',
+            });
+            const data = await res.json();
+        } catch (error) {
+            console.log(error)
+        }
     });
 </script>
 
