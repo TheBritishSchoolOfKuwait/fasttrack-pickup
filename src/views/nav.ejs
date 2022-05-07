@@ -29,3 +29,11 @@
 </style>
 
 </html>
+
+<script>
+    const ulLia = document.querySelector('a');
+    ulLia.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.clear();
+    });
+</script>
