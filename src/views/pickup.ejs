@@ -52,10 +52,15 @@
         try {
             const url = decodeURI(`http://bie-api.bsk.edu.kw:4950/Service.asmx/StudentPickupWalking?adNo=${adno}&gate=${gate}&staffCode=${staffCde}`);
 
-            const res = await fetch(url, {
+            const res = fetch(url, {
                 method: 'GET',
-            });
-            const data = await res.json();
+                mode: "cors"
+            }).then(res => {
+                console.log('Made Request');
+            }).catch(err => { console.log('There was a error that was catched') })
+            // const data = await res;
+            // console.log('Data', data)
+
         } catch (error) {
             console.log(error)
         }
