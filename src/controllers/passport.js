@@ -53,10 +53,9 @@ const authenticateUser = async (req, res) => {
                 } else console.info(`Log-In Success for ${user?.sAMAccountName}`);
                 const token = createToken(user?.sAMAccountName)
                 res.cookie('jwt', token, { httpOnly: true, maxAge: 4 * 60 * 60 * 1000 });
-
                 res.status(201).json({
                     status: "Success",
-                    user: user?.sAMAccountName
+                    user: user?.displayName
                 });
             });
         }

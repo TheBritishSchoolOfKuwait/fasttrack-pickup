@@ -44,8 +44,6 @@ app.use(
 
 app.use((req, res) => {
     res.status(404).render('404');
-})
-
-
+});
 
 app.listen(port, () => console.log(`listening on:${port}`));

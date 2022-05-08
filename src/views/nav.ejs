@@ -1,5 +1,6 @@
 <ul>
-    <li><a href="/api/logout">Logout</a></li>
+    <li id="name"></li>
+    <li><a>Logout</a></li>
 </ul>
 <style>
     ul {
@@ -9,13 +10,10 @@
         overflow: hidden;
     }
 
-    li {
+    li a {
         border-style: solid;
         border-width: 1px;
         float: right;
-    }
-
-    li a {
         display: block;
         color: black;
         text-align: center;
@@ -23,29 +21,29 @@
         text-decoration: none;
     }
 
-    li a:hover {
-        background-color: #111;
+    li#name {
+        display: block;
+        float: left;
+        text-decoration: none;
+        text-align: center;
     }
 </style>
 
 </html>
 
 <script>
+    const userFullName = localStorage.getItem('name')
+    const name = document.getElementById('name');
+    name.innerHTML = `Hello, ${userFullName}`;
+
     const ulLia = document.querySelector('a');
     ulLia.addEventListener('click', async (e) => {
         e.preventDefault();
 
-
-        try {
-            const res = await fetch('/api/login', {
-                method: 'GET'
-            });
-
-            localStorage.clear();
-        }
-        catch (error) {
-            console.log(error);
-        }
-
+        const data = await fetch('/api/logout', {
+            method: 'POST',
+        });
+        localStorage.clear();
+        location.assign("/login")
     });
 </script>

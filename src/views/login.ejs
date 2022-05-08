@@ -41,7 +41,7 @@
         // get values
         const username = form.username.value.toLowerCase();
         const password = form.password.value;
-
+        console.log(username)
         try {
             const res = await fetch('/api/login', {
                 method: 'POST',
@@ -54,6 +54,7 @@
                 errors.textContent = data.message
             }
             if (data.status == 'Success') {
+                localStorage.setItem('name', data.user)
                 localStorage.setItem('staffCode', username)
                 location.assign('/');
             }
