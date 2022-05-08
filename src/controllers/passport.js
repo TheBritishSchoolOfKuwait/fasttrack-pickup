@@ -52,14 +52,14 @@ const authenticateUser = async (req, res) => {
                     console.warn(`Log-In Failed`);
                     return res
                         .status(404)
-                } else console.info(`Log-In Success for ${user?.sAMAccountName}`);
+                } else console.info(`Log-In Success for ${user.sAMAccountName}`);
 
-                if (authorizedStaff.includes(user?.sAMAccountName)) {
-                    const token = createToken(user?.sAMAccountName)
+                if (authorizedStaff.includes(user.sAMAccountName)) {
+                    const token = createToken(user.sAMAccountName);
                     res.cookie('jwt', token, { httpOnly: true, maxAge: 4 * 60 * 60 * 1000 });
                     res.status(201).json({
                         status: "Success",
-                        user: user?.displayName
+                        user: user.displayName
                     });
                 } else {
                     res.status(401).json({

@@ -1,6 +1,6 @@
 import jsonwebtoken from "jsonwebtoken";
 
-const requireAut = (req, res, next) => {
+const requireAuth = (req, res, next) => {
 
     const token = req.cookies.jwt
     //check if token exist and verified
@@ -18,4 +18,4 @@ const requireAut = (req, res, next) => {
     }
 }
 
-export default requireAut
+export default requireAuth

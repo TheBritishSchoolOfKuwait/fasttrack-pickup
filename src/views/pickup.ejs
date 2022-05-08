@@ -17,7 +17,7 @@
                     <div>
                         <label class="labels" for="gates">GATE:</label>
                         <select class="box" name="gate" id="gate">
-                            <option value="Gate W8">GATE W8</option>
+                            <!-- <option value="Gate W8">GATE W8</option> -->
                             <option value="Gate W9">GATE W9</option>
                             <option value="Gate N1">GATE N1</option>
                         </select>
@@ -25,7 +25,7 @@
                         <label class="labels" for="adno">Ad No</label>
                         <input class="adno-field" maxlength="6" type="text" name="adno" id="adno">
                         <br>
-                        <input type="submit" />
+                        <input onclick="createPickup()" type="button" />
                     </div>
                 </div>
             </form>
@@ -34,7 +34,8 @@
 </main>
 
 </html>
-<script>
+<!-- <script>
+    import axios from 'axios';
     const form = document.querySelector('form');
 
     form.addEventListener('submit', async (e) => {
@@ -52,21 +53,22 @@
         try {
             const url = decodeURI(`http://bie-api.bsk.edu.kw:4950/Service.asmx/StudentPickupWalking?adNo=${adno}&gate=${gate}&staffCode=${staffCde}`);
 
-            const res = fetch(url, {
-                method: 'GET',
-                mode: "cors"
-            }).then(res => {
-                console.log('Made Request');
-            }).catch(err => { console.log('There was a error that was catched') })
-            // const data = await res;
-            // console.log('Data', data)
-
+            // const res = fetch(url, {
+            //     method: 'GET',
+            //     mode: ""
+            // }).then(res => console.log(res))
+            //     .then(response => response.json())
+            //     .then(data => console.log(data))
+            // // const data = await res;
+            // // console.log('Data', data)
+            axios.get()
         } catch (error) {
             console.log(error)
         }
     });
-</script>
 
+</script> -->
+<script type="text/javascript" src="../services/pickup.js"></script>
 <style>
     .main {
         text-align: center;

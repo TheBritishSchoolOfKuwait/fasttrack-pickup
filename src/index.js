@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import bodyPaser from "body-parser";
+import cors from 'cors'
 
 import { json, urlencoded } from "express";
 import path from "path";
@@ -9,7 +10,7 @@ const __dirname = path.resolve();
 
 import passportADRouter from "./routes/passport.js";
 import userADRouter from "./routes/logout.js";
-import requireAut from "./middleware/authmiddelware.js";
+import requireAuth from "./middleware/authentication.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -25,9 +26,10 @@ const port = process.env.PORT || 4500;
 app.use(json());
 app.use(bodyPaser.json());
 app.use(cookieParser());
+
 // app.use(urlencoded({ extended: true }));
 
-app.get('/', requireAut, (req, res) => {
+app.get('/', requireAuth, (req, res) => {
     res.render('pickup');
 })
 
