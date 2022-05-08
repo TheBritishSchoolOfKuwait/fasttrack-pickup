@@ -25,7 +25,6 @@ const port = process.env.PORT || 4500;
 app.use(json());
 app.use(bodyPaser.json());
 app.use(cookieParser());
-app.use()
 // app.use(urlencoded({ extended: true }));
 
 app.get('/', requireAut, (req, res) => {
