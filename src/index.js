@@ -29,7 +29,7 @@ app.use(cookieParser());
 
 // app.use(urlencoded({ extended: true }));
 
-app.get('/', requireAuth, (req, res) => {
+app.get('/', (req, res) => {
     res.render('pickup');
 })
 

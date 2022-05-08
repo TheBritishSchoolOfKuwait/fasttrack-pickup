@@ -8,6 +8,7 @@
     <title>Pickup</title>
 </head>
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <main>
     <%- include('nav.ejs') %>
         <div>
@@ -25,50 +26,44 @@
                         <label class="labels" for="adno">Ad No</label>
                         <input class="adno-field" maxlength="6" type="text" name="adno" id="adno">
                         <br>
-                        <input onclick="createPickup()" type="button" />
+                        <input onclick="createPickup()" type="button" value="Submit" />
                     </div>
                 </div>
             </form>
-
+            <div class="message" style="display:block"></div>
         </div>
 </main>
 
 </html>
-<!-- <script>
-    import axios from 'axios';
+<script>
+    const msg = document.querySelector(".message");
     const form = document.querySelector('form');
 
-    form.addEventListener('submit', async (e) => {
-
-        e.preventDefault();
-        // get values
-
+    function closeMessageDiv() {
+        msg.textContent = ""
+    }
+    const createPickup = () => {
         const gate = form.gate.value;
         let adno = form.adno.value;
 
         if (adno.length < 6) {
             adno = adno.padStart(6, "0")
         }
-        const staffCde = localStorage.getItem('staffCode')
-        try {
-            const url = decodeURI(`http://bie-api.bsk.edu.kw:4950/Service.asmx/StudentPickupWalking?adNo=${adno}&gate=${gate}&staffCode=${staffCde}`);
+        const staffCde = localStorage.getItem('staffCode');
 
-            // const res = fetch(url, {
-            //     method: 'GET',
-            //     mode: ""
-            // }).then(res => console.log(res))
-            //     .then(response => response.json())
-            //     .then(data => console.log(data))
-            // // const data = await res;
-            // // console.log('Data', data)
-            axios.get()
+        try {
+            const url =
+                decodeURI(`http://bie-api.bsk.edu.kw:4950/Service.asmx/StudentPickupWalking?adNo=${adno}&gate=${gate}&staffCode=${staffCde}`);
+            axios.get(url).then(res => {
+                console.log(res);
+                msg.textContent = res.data
+            });
+            window.setTimeout("closeMessageDiv()", 2500);
         } catch (error) {
             console.log(error)
         }
-    });
-
-</script> -->
-<script type="text/javascript" src="../services/pickup.js"></script>
+    }
+</script>
 <style>
     .main {
         text-align: center;
@@ -104,7 +99,7 @@
         margin-top: 10px;
     }
 
-    input[type=submit] {
+    input[type=button] {
         width: 30%;
         background-color: #4CAF50;
         color: white;

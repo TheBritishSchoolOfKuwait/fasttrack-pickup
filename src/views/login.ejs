@@ -45,8 +45,13 @@
         try {
             const res = await fetch('/api/login', {
                 method: 'POST',
-                body: JSON.stringify({ username, password }),
-                headers: { 'Content-Type': 'application/json' }
+                body: JSON.stringify({
+                    username,
+                    password
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
 
             const data = await res.json();
@@ -54,12 +59,11 @@
                 errors.textContent = data.message
             }
             if (data.status == 'Success') {
-                localStorage.setItem('name', data.user)
-                localStorage.setItem('staffCode', username)
+                localStorage.setItem('name', data.user);
+                localStorage.setItem('staffCode', username);
                 location.assign('/');
             }
-        }
-        catch (error) {
+        } catch (error) {
             console.log(error);
         }
 
