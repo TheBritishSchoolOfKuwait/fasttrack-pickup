@@ -3,6 +3,8 @@ import jsonwebtoken from "jsonwebtoken";
 
 const authenticateUser = async (req, res) => {
 
+    const authorizedStaff = ['NAZ', 'MLR', 'ADAM', 'RCS', 'THW', 'RCK', 'TEW', 'JAC', 'JNA', 'RBG', 'SAW', 'NLA', 'ELP', 'JAV', 'SOA', 'SOG', 'NIS'];
+
     let { username, password } = req.body;
     username = `${username}@bsk.edu.kw`
     const config = {
@@ -51,12 +53,21 @@ const authenticateUser = async (req, res) => {
                     return res
                         .status(404)
                 } else console.info(`Log-In Success for ${user?.sAMAccountName}`);
-                const token = createToken(user?.sAMAccountName)
-                res.cookie('jwt', token, { httpOnly: true, maxAge: 4 * 60 * 60 * 1000 });
-                res.status(201).json({
-                    status: "Success",
-                    user: user?.displayName
-                });
+
+                if (authorizedStaff.includes(user?.sAMAccountName)) {
+                    const token = createToken(user?.sAMAccountName)
+                    res.cookie('jwt', token, { httpOnly: true, maxAge: 4 * 60 * 60 * 1000 });
+                    res.status(201).json({
+                        status: "Success",
+                        user: user?.displayName
+                    });
+                } else {
+                    res.status(401).json({
+                        status: "Failure",
+                        message: `StaffCode has not been Authorized.
+                        Please Contact NAZ`
+                    });
+                }
             });
         }
     });

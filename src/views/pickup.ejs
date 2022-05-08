@@ -23,8 +23,7 @@
                         </select>
                         <br>
                         <label class="labels" for="adno">Ad No</label>
-                        <input class="adno-field" maxlength="6" type="text" placeholder="Admission No" name="adno"
-                            id="adno">
+                        <input class="adno-field" maxlength="6" type="text" name="adno" id="adno">
                         <br>
                         <input type="submit" />
                     </div>
@@ -39,6 +38,7 @@
     const form = document.querySelector('form');
 
     form.addEventListener('submit', async (e) => {
+
         e.preventDefault();
         // get values
 
@@ -50,8 +50,8 @@
         }
         const staffCde = localStorage.getItem('staffCode')
         try {
-            const url = decodeURIComponent(`http://bie-api.bsk.edu.kw:4950/Service.asmx/StudentPickupWalking?adNo=${adno}&gate=${gate}&staffCode=${staffCde
-                }`)
+            const url = decodeURI(`http://bie-api.bsk.edu.kw:4950/Service.asmx/StudentPickupWalking?adNo=${adno}&gate=${gate}&staffCode=${staffCde}`);
+
             const res = await fetch(url, {
                 method: 'GET',
             });
