@@ -48,11 +48,12 @@
                 body: JSON.stringify({ username, password }),
                 headers: { 'Content-Type': 'application/json' }
             });
+
             const data = await res.json();
             if (data.status == 'Failure') {
                 errors.textContent = data.message
             }
-            if (data?.displayName) {
+            if (data.status == 'Success') {
                 localStorage.setItem('staffCode', username)
                 location.assign('/');
             }

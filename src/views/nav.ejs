@@ -32,8 +32,20 @@
 
 <script>
     const ulLia = document.querySelector('a');
-    ulLia.addEventListener('click', (e) => {
+    ulLia.addEventListener('click', async (e) => {
         e.preventDefault();
-        localStorage.clear();
+
+
+        try {
+            const res = await fetch('/api/login', {
+                method: 'GET'
+            });
+
+            localStorage.clear();
+        }
+        catch (error) {
+            console.log(error);
+        }
+
     });
 </script>

@@ -30,10 +30,10 @@ const authenticateUser = async (req, res) => {
             console.warn(
                 `Authentication Failed Check Your Credentials: ${JSON.stringify(err)}`
             );
-            return res.status(404).send(`
-            <h1>The credentials you have entered is not correct please ensure they are correct</h1>
-            <a href="/login">Login Page</a>
-            `)
+            return res.status(404).json({
+                status: "Failure",
+                message: "Please Check Your Credentials"
+            })
         }
 
         if (auth) {
@@ -52,11 +52,12 @@ const authenticateUser = async (req, res) => {
                         .status(404)
                 } else console.info(`Log-In Success for ${user?.sAMAccountName}`);
                 const token = createToken(user?.sAMAccountName)
-                res.cookie('jwt', token, { httpOnly: true, maxAge: 4 * 60 * 60 * 1000 })
+                res.cookie('jwt', token, { httpOnly: true, maxAge: 4 * 60 * 60 * 1000 });
+
                 res.status(201).json({
                     status: "Success",
                     user: user?.sAMAccountName
-                })
+                });
             });
         }
     });
