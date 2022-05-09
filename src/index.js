@@ -10,8 +10,11 @@ const __dirname = path.resolve();
 
 import passportADRouter from "./routes/passport.js";
 import userADRouter from "./routes/logout.js";
+import ftPickupRouter from "./routes/pickup.js";
+
 import requireAuth from "./middleware/authentication.js";
 import cookieParser from "cookie-parser";
+
 
 dotenv.config();
 
@@ -40,7 +43,8 @@ app.get('/login', (req, res) => {
 app.use(
     "/api/",
     passportADRouter,
-    userADRouter
+    userADRouter,
+    ftPickupRouter
 );
 
 app.use((req, res) => {
@@ -48,3 +52,4 @@ app.use((req, res) => {
 });
 
 app.listen(port, () => console.log(`listening on:${port}`));
+

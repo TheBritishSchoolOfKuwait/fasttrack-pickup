@@ -42,7 +42,7 @@
     function closeMessageDiv() {
         msg.textContent = ""
     }
-    const createPickup = () => {
+    const createPickup = async () => {
         const gate = form.gate.value;
         let adno = form.adno.value;
 
@@ -52,13 +52,17 @@
         const staffCde = localStorage.getItem('staffCode');
 
         try {
-            const url =
-                decodeURI(`http://bie-api.bsk.edu.kw:4950/Service.asmx/StudentPickupWalking?adNo=${adno}&gate=${gate}&staffCode=${staffCde}`);
-            axios.get(url).then(res => {
-                console.log(res);
-                msg.textContent = res.data
-            });
-            window.setTimeout("closeMessageDiv()", 2500);
+            const res = await axios.get('/api/createPickup', {
+                params: {
+                    adno,
+                    gate,
+                    staffCde
+                }
+            })
+            console.log('Recieved on the frontend', res.data);
+            msg.textContent = res.data.message
+            window.setTimeout("closeMessageDiv()", 3000);
+            form.adno.value = ""
         } catch (error) {
             console.log(error)
         }
@@ -108,5 +112,11 @@
         border: none;
         border-radius: 4px;
         cursor: pointer;
+    }
+
+    .message {
+        text-align: center;
+        color: #4CAF50;
+        font-size: 20px;
     }
 </style>
