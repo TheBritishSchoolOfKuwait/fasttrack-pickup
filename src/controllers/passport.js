@@ -1,10 +1,9 @@
 import ActiveDirectory from "activedirectory2";
 import jsonwebtoken from "jsonwebtoken";
 import dateTime from "../utils/dateTime.js";
+import logger from "../utils/logger.js";
 
 const authenticateUser = async (req, res) => {
-  // ["x-forwarded-for"] if its sitting in front of a proxy
-  var ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
   const authorizedStaff = [
     "NAZ",
     "MLR",
@@ -24,6 +23,7 @@ const authenticateUser = async (req, res) => {
     "SOG",
     "NIS",
     "HAF",
+    ,
     "BNR",
     "BNS",
   ];
@@ -52,8 +52,11 @@ const authenticateUser = async (req, res) => {
 
   ad.authenticate(username, password, (err, auth) => {
     if (err) {
-      console.log("ad error", err);
-      console.warn(`${dateTime()} * [USER: ${username}] * Log-In Failed `);
+      var ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+      logger.error(`ERROR : FAILED AUTHENTICATION - User: ${username} by ${ip}`);
+      // console.warn(
+      //   `${dateTime()} ERROR : FAILED AUTHENTICATION - User: ${username} by ${ip}`
+      // );
       return res.status(404).json({
         status: "Failure",
         message: "Please Check Your Credentials",
@@ -71,9 +74,11 @@ const authenticateUser = async (req, res) => {
         }
 
         if (!user) {
-          console.warn(`${dateTime()} * [USER: ${username}] * Log-In Failed `);
+          logger.warn(`ERROR finding User: ${username} profile in AD`);
+          // console.warn(`ERROR finding User: ${username} profile in AD`);
           return res.status(404);
-        } else console.info(`Log-In Success for ${user.sAMAccountName}`);
+        } else logger.info(`Log-In Success for ${user.sAMAccountName}`);
+        // console.info(`Log-In Success for ${user.sAMAccountName}`);
 
         if (authorizedStaff.includes(user.sAMAccountName)) {
           const token = createToken(user.sAMAccountName);

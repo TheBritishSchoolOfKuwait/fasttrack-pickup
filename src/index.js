@@ -9,6 +9,7 @@ import { json, urlencoded } from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import ftPickupRouter from "./routes/pickup.js";
+import logger from "./utils/logger.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -45,4 +46,4 @@ app.use((req, res) => {
   res.status(404).render("404");
 });
 
-app.listen(port, () => console.log(`listening on:${port}`));
+app.listen(port, () => logger.info(`listening on:${port}`));

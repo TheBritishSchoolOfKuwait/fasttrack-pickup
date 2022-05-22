@@ -1,5 +1,5 @@
 import axios from "axios";
-import { response } from "express";
+import logger from "../utils/logger";
 
 const pickup = async (req, res) => {
   const { adno, staffCde, gate } = req.query;
@@ -18,11 +18,14 @@ const pickup = async (req, res) => {
       }
     })
     .catch((error) => {
-      console.log(`Error: ${error}`);
-      return res.status(200).json({
-        status: "Failure",
-        message: "Incorrect AdNo",
-      });
+      if (error.response.data === "Bad Request") {
+        logger.warn(`AdNo: ${adno} not found`);
+        // console.log(`AdNo: ${adno} not found`);
+        return res.status(200).json({
+          status: "Failure",
+          message: "Incorrect AdNo",
+        });
+      }
     });
 };
 export default pickup;
